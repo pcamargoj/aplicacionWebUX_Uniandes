@@ -1,0 +1,110 @@
+<div class="home">
+  <header class="home-header">
+    <div class="home-header__text">
+      <h1 class="home-header__title">¡Hola, {{ userName }}! 👋</h1>
+      <p class="home-header__subtitle">Este es el resumen de tu día</p>
+    </div>
+
+    <button mat-flat-button class="home-header__cta" (click)="onCreateAlarm()">
+      <mat-icon>add</mat-icon>
+      Crear alarma
+    </button>
+  </header>
+
+  <div class="status-strip">
+    @for (item of statusItems; track item.label) {
+      <div class="stat-item">
+        <div class="stat-item__icon" [class]="'stat-item__icon--' + item.variant">
+          <mat-icon>{{ item.icon }}</mat-icon>
+        </div>
+        <div class="stat-item__text">
+          <span class="stat-item__label">{{ item.label }}</span>
+          <span class="stat-item__value" [class]="'stat-item__value--' + item.variant">{{ item.value }}</span>
+          <span class="stat-item__sub">{{ item.subLabel }}</span>
+        </div>
+      </div>
+      @if (!$last) {
+        <div class="status-strip__divider"></div>
+      }
+    }
+  </div>
+
+  <div class="home__row">
+    <section class="alarms-card">
+      <header class="alarms-card__header">
+        <h2 class="alarms-card__title">Tus próximas alarmas</h2>
+        <a class="alarms-card__link" href="javascript:void(0)">Ver todas</a>
+      </header>
+
+      <ul class="alarms-card__list">
+        @for (alarm of upcomingAlarms; track alarm.id) {
+          <li class="alarms-card__item">
+            <div class="alarms-card__icon">
+              <mat-icon>schedule</mat-icon>
+            </div>
+            <div class="alarms-card__content">
+              <span class="alarms-card__when">{{ alarm.whenLabel }}</span>
+              <span class="alarms-card__name">{{ alarm.title }}</span>
+              <span class="alarms-card__meta">
+                {{ alarm.location }} · <span class="alarms-card__leave">{{ alarm.leaveAtLabel }}</span>
+              </span>
+            </div>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="route-card">
+      <h2 class="route-card__title">Tu ruta más próxima</h2>
+
+      <div class="route-card__chart">
+        <span class="route-card__badge">{{ routeSummary.trafficLabel }}</span>
+
+        <svg class="route-card__svg" viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="0" y1="55" x2="600" y2="55" class="route-card__gridline" />
+          <line x1="0" y1="110" x2="600" y2="110" class="route-card__gridline" />
+          <line x1="0" y1="165" x2="600" y2="165" class="route-card__gridline" />
+          <line x1="150" y1="0" x2="150" y2="220" class="route-card__gridline" />
+          <line x1="300" y1="0" x2="300" y2="220" class="route-card__gridline" />
+          <line x1="450" y1="0" x2="450" y2="220" class="route-card__gridline" />
+
+          <path
+            d="M40,180 C120,120 180,90 260,95 C320,99 340,120 380,115 C440,108 500,70 560,40"
+            class="route-card__path"
+          />
+          <circle cx="40" cy="180" r="7" class="route-card__point route-card__point--start" />
+          <circle cx="560" cy="40" r="7" class="route-card__point route-card__point--end" />
+        </svg>
+      </div>
+
+      <p class="route-card__duration">{{ routeSummary.durationLabel }}</p>
+      <p class="route-card__departure">{{ routeSummary.departureLabel }}</p>
+    </section>
+  </div>
+
+  <section class="weekly-card">
+    <h2 class="weekly-card__title">Resumen semanal</h2>
+    <p class="weekly-card__subtitle">
+      Horas ahorradas esta semana: <strong class="weekly-card__success-text">{{ hoursSavedLabel }}</strong> gracias a las salidas a tiempo
+    </p>
+
+    <div class="weekly-card__body">
+      <div class="weekly-card__chart">
+        @for (day of weeklyStats; track day.day) {
+          <div class="weekly-card__bar-col">
+            <div class="weekly-card__bar" [class.weekly-card__bar--highlight]="day.highlighted" [style.height.%]="day.value"></div>
+            <span class="weekly-card__bar-label">{{ day.day }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="weekly-card__divider"></div>
+
+      <ul class="weekly-card__stats">
+        <li>Puntualidad promedio: <strong class="weekly-card__success-text">{{ punctualityPercent }}%</strong></li>
+        <li>Alarmas activas esta semana: <strong>{{ activeAlarmsCount }}</strong></li>
+        <li>Alarma más usada: <strong>{{ mostUsedAlarm }}</strong></li>
+      </ul>
+    </div>
+  </section>
+</div>
