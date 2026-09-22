@@ -2,11 +2,12 @@
 
 **Alarmas Siempre a Tiempo** es una aplicación web construida con Angular que ayuda al usuario a salir a tiempo a sus reuniones, avisándole con anticipación según el tráfico de su ruta. Este proyecto fue desarrollado como trabajo académico para el curso de Desarrollo Web de la Universidad de los Andes.
 
-En esta primera versión de la aplicación es posible:
+Esta primera versión incluye 6 pantallas con interacción:
 
-- Visualizar el **Home**.
-- Visualizar el **Home de mis alarmas**, con el listado de alarmas configuradas por el usuario.
-- Agregar **recurrencia** a una alarma (por ejemplo, que se repita todos los días o solo entre semana).
+- **Home**.
+- **Mis alarmas**, con el listado de alarmas configuradas por el usuario.
+- **Detalle de una alarma**.
+- El flujo de **agregar recurrencia a una alarma** (por ejemplo, que se repita todos los días o solo entre semana), compuesto por 3 pantallas.
 
 ## Diseño
 

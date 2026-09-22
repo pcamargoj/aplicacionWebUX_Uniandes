@@ -72,6 +72,16 @@
   border-bottom: 1px solid var(--mat-sys-outline-variant);
 }
 
+.alarms-page__item-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
 .alarms-page__icon {
   display: flex;
   align-items: center;

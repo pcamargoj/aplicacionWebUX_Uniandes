@@ -1,4 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -22,7 +23,7 @@ interface AlarmsTab {
 
 @Component({
   selector: 'app-alarms',
-  imports: [MatIconModule, MatButtonModule, MatSlideToggleModule],
+  imports: [RouterLink, MatIconModule, MatButtonModule, MatSlideToggleModule],
   templateUrl: './alarms.html',
   styleUrl: './alarms.css',
 })

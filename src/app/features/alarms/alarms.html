@@ -24,16 +24,18 @@
     <ul class="alarms-page__list">
       @for (alarm of filteredAlarms(); track alarm.id) {
         <li class="alarms-page__item">
-          <div class="alarms-page__icon">
-            <mat-icon>schedule</mat-icon>
-          </div>
-          <div class="alarms-page__content">
-            <span class="alarms-page__when">{{ alarm.whenLabel }}</span>
-            <span class="alarms-page__name">{{ alarm.title }}</span>
-            <span class="alarms-page__meta">
-              {{ alarm.location }} · <span class="alarms-page__leave">{{ alarm.leaveAtLabel }}</span>
-            </span>
-          </div>
+          <a class="alarms-page__item-link" [routerLink]="['/alarmas', alarm.id]">
+            <div class="alarms-page__icon">
+              <mat-icon>schedule</mat-icon>
+            </div>
+            <div class="alarms-page__content">
+              <span class="alarms-page__when">{{ alarm.whenLabel }}</span>
+              <span class="alarms-page__name">{{ alarm.title }}</span>
+              <span class="alarms-page__meta">
+                {{ alarm.location }} · <span class="alarms-page__leave">{{ alarm.leaveAtLabel }}</span>
+              </span>
+            </div>
+          </a>
           <mat-slide-toggle
             class="alarms-page__toggle"
             hideIcon
