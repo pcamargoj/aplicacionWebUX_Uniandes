@@ -1,0 +1,52 @@
+<div class="alarms-page">
+  <header class="alarms-page__header">
+    <h1 class="alarms-page__title">Mis alarmas</h1>
+    <button mat-flat-button class="alarms-page__cta" (click)="onCreateAlarm()">
+      <mat-icon>add</mat-icon>
+      Nueva alarma
+    </button>
+  </header>
+
+  <nav class="alarms-page__tabs">
+    @for (tab of tabs; track tab.key) {
+      <button
+        type="button"
+        class="alarms-page__tab"
+        [class.alarms-page__tab--active]="selectedTab() === tab.key"
+        (click)="selectTab(tab.key)"
+      >
+        {{ tab.label }}
+      </button>
+    }
+  </nav>
+
+  <section class="alarms-page__list-card">
+    <ul class="alarms-page__list">
+      @for (alarm of filteredAlarms(); track alarm.id) {
+        <li class="alarms-page__item">
+          <div class="alarms-page__icon">
+            <mat-icon>schedule</mat-icon>
+          </div>
+          <div class="alarms-page__content">
+            <span class="alarms-page__when">{{ alarm.whenLabel }}</span>
+            <span class="alarms-page__name">{{ alarm.title }}</span>
+            <span class="alarms-page__meta">
+              {{ alarm.location }} · <span class="alarms-page__leave">{{ alarm.leaveAtLabel }}</span>
+            </span>
+          </div>
+          <mat-slide-toggle
+            class="alarms-page__toggle"
+            hideIcon
+            [checked]="alarm.enabled"
+            (change)="toggleAlarm(alarm)"
+          />
+        </li>
+      }
+    </ul>
+  </section>
+
+  <div class="alarms-page__summary">
+    <mat-icon>schedule</mat-icon>
+    <span>{{ activeAlarmsCount }} alarmas activas · Próxima salida en {{ nextDepartureLabel }}</span>
+  </div>
+</div>

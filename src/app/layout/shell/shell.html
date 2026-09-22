@@ -9,21 +9,23 @@
     </button>
 
     <nav class="shell__nav">
-      <a
-        class="shell__nav-item"
-        routerLink="/"
-        routerLinkActive="shell__nav-item--active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <mat-icon>home</mat-icon>
-        <span>Inicio</span>
-      </a>
-
-      @for (item of navItems.slice(1); track item.route) {
-        <button type="button" class="shell__nav-item" disabled>
-          <mat-icon>{{ item.icon }}</mat-icon>
-          <span>{{ item.label }}</span>
-        </button>
+      @for (item of navItems; track item.route) {
+        @if (item.implemented) {
+          <a
+            class="shell__nav-item"
+            [routerLink]="item.route"
+            routerLinkActive="shell__nav-item--active"
+            [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+          >
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span>{{ item.label }}</span>
+          </a>
+        } @else {
+          <button type="button" class="shell__nav-item" disabled>
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <span>{{ item.label }}</span>
+          </button>
+        }
       }
     </nav>
   </aside>
