@@ -21,7 +21,7 @@
 
 .shell__fab {
   margin-block-end: 8px;
-  --mat-fab-container-color: #e8543f;
+  --mat-fab-container-color: var(--app-cta);
   --mat-fab-foreground-color: #fff;
 }
 

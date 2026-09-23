@@ -1,0 +1,70 @@
+import { Injectable, computed, signal } from '@angular/core';
+import { EndRule, FrequencyConfig, RecurrenceDraft, Weekday } from './recurrence.model';
+import { endSummary, frequencySummary, nextOccurrences, weekdayOf } from './recurrence.utils';
+
+// Borrador del flujo de recurrencia. Se provee en la ruta del flujo: vive mientras dura y se
+// reinicia al salir.
+@Injectable()
+export class RecurrenceDraftStore {
+  private readonly state = signal<RecurrenceDraft>({
+    alarmId: '',
+    frequency: null,
+    end: { type: 'never' },
+  });
+  private readonly alarmStart = signal<Date | null>(null);
+  private readonly isConfirmed = signal(false);
+
+  readonly draft = this.state.asReadonly();
+  readonly confirmed = this.isConfirmed.asReadonly();
+
+  readonly summaryLabel = computed(() => {
+    const frequency = this.state().frequency;
+    return frequency ? frequencySummary(frequency) : '';
+  });
+
+  readonly endLabel = computed(() => endSummary(this.state().end));
+
+  readonly nextOccurrences = computed(() => {
+    const { frequency, end } = this.state();
+    const start = this.alarmStart();
+    return frequency && start ? nextOccurrences(start, frequency, end, 4) : [];
+  });
+
+  init(alarmId: string, alarmStart: Date): void {
+    this.alarmStart.set(alarmStart);
+    this.isConfirmed.set(false);
+    this.state.set({
+      alarmId,
+      frequency: { type: 'weekly', interval: 1, weekdays: [weekdayOf(alarmStart)] },
+      end: { type: 'never' },
+    });
+  }
+
+  toggleWeekday(day: Weekday): void {
+    this.updateFrequency((frequency) => ({
+      ...frequency,
+      weekdays: frequency.weekdays.includes(day)
+        ? frequency.weekdays.filter((d) => d !== day)
+        : [...frequency.weekdays, day],
+    }));
+  }
+
+  setWeekInterval(interval: number): void {
+    this.updateFrequency((frequency) => ({ ...frequency, interval }));
+  }
+
+  setEnd(end: EndRule): void {
+    this.state.update((draft) => ({ ...draft, end }));
+  }
+
+  // Mock: aún no hay backend; la persistencia llega con AlarmsService
+  confirm(): void {
+    this.isConfirmed.set(true);
+  }
+
+  private updateFrequency(change: (frequency: FrequencyConfig) => FrequencyConfig): void {
+    this.state.update((draft) =>
+      draft.frequency ? { ...draft, frequency: change(draft.frequency) } : draft,
+    );
+  }
+}

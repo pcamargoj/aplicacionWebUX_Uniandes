@@ -19,7 +19,7 @@
 }
 
 .alarms-page__cta {
-  --mat-button-filled-container-color: #e8543f;
+  --mat-button-filled-container-color: var(--app-cta);
   --mat-button-filled-label-text-color: #fff;
   border-radius: 999px;
 }

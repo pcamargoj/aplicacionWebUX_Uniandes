@@ -38,7 +38,7 @@
 }
 
 .home-header__cta {
-  --mat-button-filled-container-color: #e8543f;
+  --mat-button-filled-container-color: var(--app-cta);
   --mat-button-filled-label-text-color: #fff;
   border-radius: 999px;
 }
@@ -308,7 +308,7 @@
 }
 
 .weekly-card__success-text {
-  color: #1e7e34;
+  color: var(--app-success);
 }
 
 .weekly-card__body {

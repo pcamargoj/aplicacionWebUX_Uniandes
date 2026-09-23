@@ -43,7 +43,7 @@ const MONTHS_SHORT = [
 ];
 
 // Date.getDay() usa 0 = domingo; el modelo usa 0 = lunes
-function weekdayOf(date: Date): Weekday {
+export function weekdayOf(date: Date): Weekday {
   return ((date.getDay() + 6) % 7) as Weekday;
 }
 

@@ -1,3 +1,9 @@
+/* Pantalla completa (fuera del Shell): el padding que antes daba shell__main */
+:host {
+  display: block;
+  padding: 24px 32px;
+}
+
 .alarm-detail {
   display: flex;
   flex-direction: column;
@@ -52,7 +58,7 @@
 
 .alarm-detail__status--active {
   background: #e6f4ea;
-  color: #1e7e34;
+  color: var(--app-success);
 }
 
 .alarm-detail__recurrence {
@@ -161,7 +167,7 @@
 }
 
 .alarm-detail__recurrence-cta {
-  --mat-button-filled-container-color: #e8543f;
+  --mat-button-filled-container-color: var(--app-cta);
   --mat-button-filled-label-text-color: #fff;
   border-radius: 999px;
 }
@@ -188,7 +194,7 @@
 }
 
 .alarm-detail__stats-line strong {
-  color: #1e7e34;
+  color: var(--app-success);
 }
 
 .alarm-detail__stats-note {

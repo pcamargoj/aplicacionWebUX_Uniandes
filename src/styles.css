@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Únicos colores propios; todo lo demás sale de las variables M3 (--mat-sys-*) */
+:root {
+  --app-cta: #e8543f;
+  --app-success: #1e7e34;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
