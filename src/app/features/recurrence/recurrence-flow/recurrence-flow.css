@@ -58,6 +58,9 @@
 
 .flow__stepper {
   grid-column: 2;
+  /* En Figma los círculos están en y=38; se baja sin alterar la altura del header */
+  position: relative;
+  top: 2px;
 }
 
 .flow__main {

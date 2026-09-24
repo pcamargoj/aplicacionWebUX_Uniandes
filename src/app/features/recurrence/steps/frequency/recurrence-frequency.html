@@ -1,0 +1,68 @@
+<section class="step">
+  <h1 class="step__title">¿Con qué frecuencia se repite?</h1>
+
+  <div class="step__columns">
+    <mat-radio-group class="step__options" value="weekly" aria-label="Frecuencia">
+      @for (option of options; track option.value) {
+        <app-option-card
+          [value]="option.value"
+          [title]="option.title"
+          [subtitle]="option.subtitle"
+          [disabled]="option.disabled"
+        />
+      }
+    </mat-radio-group>
+
+    <div class="step__side">
+      <div class="step__panel">
+        <h2 class="step__panel-title">Semanalmente</h2>
+
+        <div class="frequency__interval">
+          <label class="frequency__label" for="week-interval">Repetir cada</label>
+          <select
+            id="week-interval"
+            class="frequency__select"
+            [value]="frequency()?.interval"
+            (change)="onIntervalChange($event)"
+          >
+            @for (n of intervals; track n) {
+              <option [value]="n">{{ n }}</option>
+            }
+          </select>
+          <span class="frequency__label">{{
+            frequency()?.interval === 1 ? 'semana' : 'semanas'
+          }}</span>
+        </div>
+
+        <p class="frequency__label frequency__days-label" id="weekdays-label">Días de la semana</p>
+        <div class="frequency__days" role="group" aria-labelledby="weekdays-label">
+          @for (weekday of weekdays; track weekday.day) {
+            <button
+              type="button"
+              class="frequency__day"
+              [class.frequency__day--selected]="isSelected(weekday.day)"
+              [attr.aria-pressed]="isSelected(weekday.day)"
+              [attr.aria-label]="weekday.name"
+              (click)="store.toggleWeekday(weekday.day)"
+            >
+              {{ weekday.letter }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <p class="frequency__summary" aria-live="polite">
+        @if (canContinue()) {
+          <mat-icon class="frequency__summary-icon" aria-hidden="true">event</mat-icon>
+          Se repetirá {{ store.summaryLabel() }}.
+        } @else {
+          Elige al menos un día de la semana.
+        }
+      </p>
+
+      <button mat-flat-button class="step__cta" [disabled]="!canContinue()" (click)="continue()">
+        Continuar
+      </button>
+    </div>
+  </div>
+</section>

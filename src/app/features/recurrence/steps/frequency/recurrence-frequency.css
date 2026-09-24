@@ -1,0 +1,90 @@
+.frequency__label {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.frequency__interval {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* 126px desde el borde del panel hasta el select, como en Figma */
+.frequency__interval label {
+  width: 116px;
+}
+
+.frequency__select {
+  box-sizing: border-box;
+  width: 60px;
+  height: 34px;
+  padding: 0 8px 0 12px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-surface-container-lowest);
+  font: var(--mat-sys-label-large);
+  color: var(--mat-sys-on-surface);
+  cursor: pointer;
+}
+
+.frequency__select:focus-visible,
+.frequency__day:focus-visible {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: 2px;
+}
+
+.frequency__days-label {
+  margin: 18px 0 12px;
+}
+
+.frequency__days {
+  display: flex;
+  gap: 8px;
+}
+
+.frequency__day {
+  box-sizing: border-box;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-full);
+  background: var(--mat-sys-surface-container-lowest);
+  font: var(--mat-sys-body-medium);
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+  cursor: pointer;
+}
+
+.frequency__day:hover {
+  background: var(--mat-sys-surface-container);
+}
+
+.frequency__day--selected,
+.frequency__day--selected:hover {
+  border-color: var(--mat-sys-primary);
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+}
+
+.frequency__summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  min-height: 46px;
+  margin: 28px 0 32px;
+  padding: 0 16px 0 14px;
+  border-radius: 10px;
+  background: var(--mat-sys-primary-container);
+  font: var(--mat-sys-body-medium);
+  font-weight: 500;
+  color: var(--mat-sys-on-primary-container);
+}
+
+.frequency__summary-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}

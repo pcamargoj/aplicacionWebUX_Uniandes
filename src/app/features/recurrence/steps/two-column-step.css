@@ -1,0 +1,75 @@
+/* Layout compartido de los pasos con opciones + panel (WD14, WD15):
+   columna de opciones de 560px y panel de 340px. A 1440px el contenido empieza en x=149. */
+.step {
+  box-sizing: border-box;
+  padding: 32px 40px 48px max(24px, calc((100% - 1046px) / 2 - 48px));
+}
+
+.step__title {
+  margin: 0 0 48px;
+  font: var(--mat-sys-headline-small);
+  font-weight: 700;
+  color: var(--mat-sys-on-surface);
+}
+
+.step__columns {
+  display: grid;
+  grid-template-columns: minmax(0, 560px) 340px;
+  column-gap: 146px;
+  align-items: start;
+}
+
+/* En Figma las opciones empiezan 8px más abajo que el panel */
+.step__options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.step__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.step__panel {
+  box-sizing: border-box;
+  align-self: stretch;
+  min-height: 300px;
+  padding: 24px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-large);
+  background: var(--mat-sys-surface-container-lowest);
+  box-shadow: var(--mat-sys-level1);
+}
+
+.step__panel-title {
+  margin: 0;
+  font: var(--mat-sys-title-medium);
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+.step__cta {
+  --mat-button-filled-container-color: var(--app-cta);
+  --mat-button-filled-label-text-color: #fff;
+  /* M3 Button "Small" */
+  --mat-button-filled-horizontal-padding: 16px;
+  border-radius: var(--mat-sys-corner-full);
+}
+
+@media (max-width: 900px) {
+  .step {
+    padding-right: 24px;
+  }
+
+  .step__panel {
+    min-height: 0;
+  }
+
+  .step__columns {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 24px;
+  }
+}
