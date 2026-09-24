@@ -1,0 +1,124 @@
+/* Una sola columna de 676px, centrada (WD16) */
+.confirm {
+  box-sizing: border-box;
+  max-width: 676px;
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.confirm__title {
+  margin: 0 0 52px;
+  font: var(--mat-sys-headline-small);
+  font-weight: 700;
+  color: var(--mat-sys-on-surface);
+}
+
+.confirm__card {
+  box-sizing: border-box;
+  padding: 28px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-large);
+  background: var(--mat-sys-surface-container-lowest);
+  box-shadow: var(--mat-sys-level1);
+}
+
+.confirm__card--occurrences {
+  margin-top: 24px;
+  padding: 24px;
+}
+
+.confirm__alarm {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.confirm__alarm-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-primary);
+}
+
+.confirm__alarm-title {
+  margin: 0;
+  font: var(--mat-sys-title-large);
+  font-weight: 700;
+  color: var(--mat-sys-on-surface);
+}
+
+.confirm__alarm-subtitle {
+  margin: 4px 0 0;
+  font: var(--mat-sys-body-medium);
+  font-size: 14px;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+/* Tres columnas en x = 0 / 280 / 490 dentro de la tarjeta */
+.confirm__facts {
+  display: grid;
+  grid-template-columns: 280px 210px 1fr;
+  margin: 24px 0 0;
+}
+
+.confirm__fact dt {
+  font: var(--mat-sys-label-medium);
+  color: var(--mat-sys-outline);
+}
+
+.confirm__fact dd {
+  margin: 4px 0 0;
+  font: var(--mat-sys-title-medium);
+  font-weight: 700;
+  color: var(--mat-sys-on-surface);
+}
+
+.confirm__fact .confirm__departure {
+  color: var(--app-cta);
+}
+
+.confirm__card-title {
+  margin: 0 0 14px;
+  font: var(--mat-sys-title-medium);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+.confirm__actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+/* M3 Button "Small": padding lateral de 16px */
+.confirm__back {
+  --mat-button-outlined-horizontal-padding: 16px;
+  --mat-button-outlined-outline-color: var(--mat-sys-primary);
+  border-radius: var(--mat-sys-corner-full);
+}
+
+.confirm__cta {
+  --mat-button-filled-container-color: var(--app-cta);
+  --mat-button-filled-label-text-color: #fff;
+  --mat-button-filled-horizontal-padding: 16px;
+  border-radius: var(--mat-sys-corner-full);
+}
+
+@media (max-width: 724px) {
+  .confirm {
+    margin: 0 24px;
+  }
+
+  .confirm__facts {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+}

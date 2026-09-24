@@ -1,0 +1,40 @@
+<section class="confirm">
+  <h1 class="confirm__title">Confirma tu alarma recurrente</h1>
+
+  <article class="confirm__card">
+    <header class="confirm__alarm">
+      <span class="confirm__alarm-icon">
+        <mat-icon aria-hidden="true">autorenew</mat-icon>
+      </span>
+      <div>
+        <h2 class="confirm__alarm-title">{{ alarm.title }}</h2>
+        <p class="confirm__alarm-subtitle">{{ repeats() }} · {{ meetingTime }}</p>
+      </div>
+    </header>
+
+    <dl class="confirm__facts">
+      <div class="confirm__fact">
+        <dt>Repite</dt>
+        <dd>{{ repeats() }}</dd>
+      </div>
+      <div class="confirm__fact">
+        <dt>Termina</dt>
+        <dd>{{ ends() }}</dd>
+      </div>
+      <div class="confirm__fact">
+        <dt>Salida sugerida</dt>
+        <dd class="confirm__departure">{{ departureTime }}</dd>
+      </div>
+    </dl>
+  </article>
+
+  <article class="confirm__card confirm__card--occurrences">
+    <h2 class="confirm__card-title">Próximas ocurrencias</h2>
+    <app-occurrences-table [dates]="occurrences()" [departure]="alarm.departureAt" />
+  </article>
+
+  <div class="confirm__actions">
+    <button mat-stroked-button class="confirm__back" (click)="back()">Atrás</button>
+    <button mat-flat-button class="confirm__cta" (click)="confirm()">Confirmar recurrencia</button>
+  </div>
+</section>

@@ -3,7 +3,9 @@ import {
   endSummary,
   formatMonthYear,
   formatOccurrence,
+  formatLongDate,
   formatPickerDate,
+  formatTime,
   frequencySummary,
   nextOccurrences,
 } from './recurrence.utils';
@@ -132,5 +134,24 @@ describe('formatPickerDate', () => {
 describe('formatMonthYear', () => {
   it('formatea el mes visible del calendario con mayúscula inicial', () => {
     expect(formatMonthYear(new Date(2026, 11, 16))).toBe('Diciembre 2026');
+  });
+});
+
+describe('formatTime', () => {
+  it('formatea la hora en 12 horas con AM/PM, como el diseño', () => {
+    expect(formatTime(new Date(2026, 7, 26, 9, 0))).toBe('9:00 AM');
+    expect(formatTime(new Date(2026, 7, 26, 8, 5))).toBe('8:05 AM');
+    expect(formatTime(new Date(2026, 7, 26, 14, 30))).toBe('2:30 PM');
+  });
+
+  it('usa 12 para el mediodía y la medianoche', () => {
+    expect(formatTime(new Date(2026, 7, 26, 12, 0))).toBe('12:00 PM');
+    expect(formatTime(new Date(2026, 7, 26, 0, 15))).toBe('12:15 AM');
+  });
+});
+
+describe('formatLongDate', () => {
+  it('formatea la fecha larga', () => {
+    expect(formatLongDate(new Date(2026, 11, 16))).toBe('16 de diciembre de 2026');
   });
 });

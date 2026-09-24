@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/ro
 import { filter, map } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AlarmsService } from '../../../core/alarms.service';
 import { RecurrenceDraftStore } from '../recurrence-draft.store';
 import { RecurrenceStepper } from '../components/recurrence-stepper/recurrence-stepper';
 
@@ -13,9 +14,6 @@ const STEPS = [
   { path: 'fin', label: 'Hasta cuándo' },
   { path: 'confirmar', label: 'Confirmar' },
 ];
-
-// Fecha de la alarma mock (miércoles 26 ago. 2026, 9:00 AM) hasta que exista AlarmsService
-const ALARM_START = new Date(2026, 7, 26, 9, 0);
 
 @Component({
   selector: 'app-recurrence-flow',
@@ -27,6 +25,7 @@ export class RecurrenceFlow implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly store = inject(RecurrenceDraftStore);
+  private readonly alarms = inject(AlarmsService);
 
   readonly id = input.required<string>();
 
@@ -42,7 +41,7 @@ export class RecurrenceFlow implements OnInit {
   );
 
   ngOnInit(): void {
-    this.store.init(this.id(), ALARM_START);
+    this.store.init(this.id(), this.alarms.getById(this.id()).meetingAt);
   }
 
   protected goBack(): void {

@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+/* Columnas en proporción a Figma (WD16: 24 / 254 / 424 px en una tarjeta de 676) */
+.occurrences {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.occurrences th,
+.occurrences td {
+  padding: 0;
+  text-align: left;
+}
+
+.occurrences thead th {
+  font: var(--mat-sys-label-medium);
+  color: var(--mat-sys-outline);
+}
+
+.occurrences thead th:nth-child(1) {
+  width: 37%;
+}
+
+.occurrences thead th:nth-child(2) {
+  width: 27%;
+}
+
+.occurrences tbody tr {
+  height: 44px;
+}
+
+.occurrences tbody tr + tr {
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+.occurrences__date {
+  font: var(--mat-sys-body-medium);
+  font-weight: 500;
+  color: var(--mat-sys-on-surface);
+}
+
+.occurrences__time {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.occurrences__departure {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-outline);
+}
+
+.occurrences__departure--known {
+  font-weight: 600;
+  color: var(--app-success);
+}

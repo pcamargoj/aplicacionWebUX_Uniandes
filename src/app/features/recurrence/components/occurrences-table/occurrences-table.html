@@ -1,0 +1,24 @@
+<table class="occurrences">
+  <thead>
+    <tr>
+      <th scope="col">Fecha</th>
+      <th scope="col">{{ timeHeader() }}</th>
+      <th scope="col">Salida estimada</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (date of dates(); track date.getTime(); let first = $first) {
+      <tr>
+        <th scope="row" class="occurrences__date">{{ formatOccurrence(date, true) }}</th>
+        <td class="occurrences__time">{{ formatTime(date) }}</td>
+        @if (first) {
+          <td class="occurrences__departure occurrences__departure--known">
+            {{ formatTime(departure()) }}
+          </td>
+        } @else {
+          <td class="occurrences__departure">Se calculará automáticamente</td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

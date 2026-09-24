@@ -104,8 +104,7 @@ export function endSummary(end: EndRule): string {
   if (end.type === 'never') {
     return 'Nunca';
   }
-  const { date } = end;
-  return `Se detendrá el ${date.getDate()} de ${MONTHS[date.getMonth()]} de ${date.getFullYear()}`;
+  return `Se detendrá el ${formatLongDate(end.date)}`;
 }
 
 // 'Mié. 26 ago. 2026' (confirmación y éxito) o 'Mié. 26 ago.' (próximas ocurrencias)
@@ -125,4 +124,16 @@ export function formatPickerDate(date: Date): string {
 export function formatMonthYear(date: Date): string {
   const month = MONTHS[date.getMonth()];
   return `${month[0].toUpperCase()}${month.slice(1)} ${date.getFullYear()}`;
+}
+
+// '9:00 AM' (el diseño usa AM/PM, no el 'a. m.' de es-CO)
+export function formatTime(date: Date): string {
+  const hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${hours % 12 || 12}:${minutes} ${hours < 12 ? 'AM' : 'PM'}`;
+}
+
+// '16 de diciembre de 2026'
+export function formatLongDate(date: Date): string {
+  return `${date.getDate()} de ${MONTHS[date.getMonth()]} de ${date.getFullYear()}`;
 }
