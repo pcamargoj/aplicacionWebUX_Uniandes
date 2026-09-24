@@ -11,8 +11,11 @@ describe('RecurrenceFlow', () => {
   const url = () => TestBed.inject(Router).url;
   const activeStep = () =>
     root().querySelector('app-recurrence-stepper [aria-current="step"]')?.textContent?.trim();
+  // El botón del flujo termina en "Volver" (antes va el ícono); no confundir con "Volver al detalle"
   const backButton = () =>
-    Array.from(root().querySelectorAll('button')).find((b) => b.textContent?.includes('Volver'));
+    Array.from(root().querySelectorAll('button')).find((b) =>
+      b.textContent?.trim().endsWith('Volver'),
+    );
 
   async function clickBack() {
     backButton()!.click();

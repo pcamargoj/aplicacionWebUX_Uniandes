@@ -1,0 +1,44 @@
+<section class="success">
+  <div class="success__badge" aria-hidden="true">
+    <mat-icon>check</mat-icon>
+  </div>
+
+  <h1 class="success__title">¡Recurrencia agregada!</h1>
+  <p class="success__subtitle">Tu alarma ahora se repetirá {{ store.summaryLabel() }}.</p>
+
+  <article class="success__card">
+    <h2 class="success__card-title">Próximas reuniones</h2>
+    <app-occurrences-table
+      class="success__table"
+      [dates]="occurrences()"
+      [departure]="alarm.departureAt"
+      timeHeader="Reunión"
+    />
+    <button type="button" class="success__link" (click)="viewAllOccurrences()">
+      <mat-icon aria-hidden="true">event</mat-icon>
+      Ver todas las recurrencias
+      <mat-icon aria-hidden="true">chevron_right</mat-icon>
+    </button>
+  </article>
+
+  <div class="success__actions">
+    <button mat-stroked-button class="success__detail" (click)="goToDetail()">
+      Volver al detalle
+    </button>
+    <button mat-flat-button class="success__cta" (click)="goToAlarms()">Ir a mis alarmas</button>
+  </div>
+
+  <aside class="success__share">
+    <mat-icon class="success__share-icon" aria-hidden="true">share</mat-icon>
+    <div>
+      <h2 class="success__share-title">Comparte esta alarma con tu equipo</h2>
+      <p class="success__share-text">
+        Otras personas pueden recibir un recordatorio con la misma hora de salida recomendada.
+      </p>
+      <button type="button" class="success__link success__link--share" (click)="shareAlarm()">
+        Compartir enlace de la alarma
+        <mat-icon aria-hidden="true">chevron_right</mat-icon>
+      </button>
+    </div>
+  </aside>
+</section>
