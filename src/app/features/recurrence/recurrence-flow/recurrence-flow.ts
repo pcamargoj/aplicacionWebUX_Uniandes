@@ -41,7 +41,12 @@ export class RecurrenceFlow implements OnInit {
   );
 
   ngOnInit(): void {
-    this.store.init(this.id(), this.alarms.getById(this.id()).meetingAt);
+    const alarm = this.alarms.getById(this.id());
+    if (!alarm) {
+      this.router.navigate(['/alarmas']);
+      return;
+    }
+    this.store.init(alarm.id, alarm.meetingAt);
   }
 
   protected goBack(): void {

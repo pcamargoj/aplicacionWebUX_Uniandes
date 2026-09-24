@@ -1,4 +1,5 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { AlarmsService } from '../../core/alarms.service';
 import { EndRule, FrequencyConfig, RecurrenceDraft, Weekday } from './recurrence.model';
 import { endSummary, frequencySummary, nextOccurrences, weekdayOf } from './recurrence.utils';
 
@@ -6,6 +7,8 @@ import { endSummary, frequencySummary, nextOccurrences, weekdayOf } from './recu
 // reinicia al salir.
 @Injectable()
 export class RecurrenceDraftStore {
+  private readonly alarms = inject(AlarmsService);
+
   private readonly state = signal<RecurrenceDraft>({
     alarmId: '',
     frequency: null,
@@ -58,8 +61,11 @@ export class RecurrenceDraftStore {
     this.state.update((draft) => ({ ...draft, end }));
   }
 
-  // Mock: aún no hay backend; la persistencia llega con AlarmsService
   confirm(): void {
+    const { alarmId, frequency, end } = this.state();
+    if (frequency) {
+      this.alarms.setRecurrence(alarmId, { frequency, end });
+    }
     this.isConfirmed.set(true);
   }
 

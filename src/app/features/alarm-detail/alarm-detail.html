@@ -1,75 +1,96 @@
 <div class="alarm-detail">
-  <div class="alarm-detail__topbar">
-    <button type="button" class="alarm-detail__back" (click)="goBack()">
-      <mat-icon>chevron_left</mat-icon>
-      Volver
-    </button>
+  @if (alarm(); as alarm) {
+    <div class="alarm-detail__topbar">
+      <button type="button" class="alarm-detail__back" (click)="goBack()">
+        <mat-icon>chevron_left</mat-icon>
+        Volver
+      </button>
 
-    <button mat-stroked-button class="alarm-detail__edit-link" (click)="onEdit()">
-      <mat-icon>edit</mat-icon>
-      Editar
-    </button>
-  </div>
+      <button mat-stroked-button class="alarm-detail__edit-link" (click)="onEdit()">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button>
+    </div>
 
-  <div class="alarm-detail__heading">
-    <h1 class="alarm-detail__title">{{ alarmTitle }}</h1>
-    <span class="alarm-detail__status" [class.alarm-detail__status--active]="isActive">
-      {{ isActive ? 'Activa' : 'Inactiva' }}
-    </span>
-  </div>
+    <div class="alarm-detail__heading">
+      <h1 class="alarm-detail__title">{{ alarm.title }}</h1>
+      <span class="alarm-detail__status" [class.alarm-detail__status--active]="alarm.enabled">
+        {{ alarm.enabled ? 'Activa' : 'Inactiva' }}
+      </span>
+    </div>
 
-  <p class="alarm-detail__recurrence">
-    <mat-icon>autorenew</mat-icon>
-    {{ recurrenceLabel }}
-  </p>
+    @if (recurrenceLabel(); as recurrenceLabel) {
+      <p class="alarm-detail__recurrence">
+        <mat-icon>autorenew</mat-icon>
+        {{ recurrenceLabel }}
+      </p>
+    }
 
-  <div class="alarm-detail__row">
-    <section class="alarm-detail__card">
-      <dl class="alarm-detail__fields">
-        @for (field of details; track field.label) {
-          <div class="alarm-detail__field">
-            <dt>{{ field.label }}</dt>
-            <dd>{{ field.value }}</dd>
-          </div>
-        }
-      </dl>
-    </section>
+    <div class="alarm-detail__row" [class.alarm-detail__row--single]="!alarm.recurrence">
+      <section class="alarm-detail__card">
+        <dl class="alarm-detail__fields">
+          @for (field of details(); track field.label) {
+            <div class="alarm-detail__field">
+              <dt>{{ field.label }}</dt>
+              <dd>{{ field.value }}</dd>
+            </div>
+          }
+        </dl>
+      </section>
 
-    <section class="alarm-detail__card">
-      <h2 class="alarm-detail__card-title">Próximas ocurrencias</h2>
-      <ul class="alarm-detail__occurrences">
-        @for (occurrence of occurrences; track occurrence.dateLabel) {
-          <li class="alarm-detail__occurrence">
-            <span>{{ occurrence.dateLabel }}</span>
-            <span>{{ occurrence.timeLabel }}</span>
-          </li>
-        }
-      </ul>
+      @if (alarm.recurrence) {
+        <section class="alarm-detail__card">
+          <h2 class="alarm-detail__card-title">Próximas ocurrencias</h2>
+          <ul class="alarm-detail__occurrences">
+            @for (occurrence of occurrences(); track occurrence.dateLabel) {
+              <li class="alarm-detail__occurrence">
+                <span>{{ occurrence.dateLabel }}</span>
+                <span>{{ occurrence.timeLabel }}</span>
+              </li>
+            }
+          </ul>
 
-      <a class="alarm-detail__view-all" href="javascript:void(0)" (click)="onViewAllOccurrences()">
-        <mat-icon>event</mat-icon>
-        Ver todas las recurrencias
-        <mat-icon>chevron_right</mat-icon>
-      </a>
-    </section>
-  </div>
+          <a
+            class="alarm-detail__view-all"
+            href="javascript:void(0)"
+            (click)="onViewAllOccurrences()"
+          >
+            <mat-icon>event</mat-icon>
+            Ver todas las recurrencias
+            <mat-icon>chevron_right</mat-icon>
+          </a>
+        </section>
+      }
+    </div>
 
-  <div class="alarm-detail__actions">
-    <button mat-stroked-button class="alarm-detail__edit" (click)="onEdit()">
-      <mat-icon>edit</mat-icon>
-      Editar alarma
-    </button>
-    <button mat-flat-button class="alarm-detail__recurrence-cta" (click)="onAddRecurrence()">
-      <mat-icon>autorenew</mat-icon>
-      Agregar recurrencia
-    </button>
-  </div>
+    <div class="alarm-detail__actions">
+      <button mat-stroked-button class="alarm-detail__edit" (click)="onEdit()">
+        <mat-icon>edit</mat-icon>
+        Editar alarma
+      </button>
+      <button mat-flat-button class="alarm-detail__recurrence-cta" (click)="onAddRecurrence()">
+        <mat-icon>autorenew</mat-icon>
+        Agregar recurrencia
+      </button>
+    </div>
 
-  <div class="alarm-detail__stats">
-    <h2 class="alarm-detail__stats-title">Estadísticas de esta alarma recurrente</h2>
-    <p class="alarm-detail__stats-line">
-      Salidas a tiempo: <strong>{{ onTimeCount }}/{{ totalCount }}</strong> · Puntualidad: <strong>{{ punctualityPercent }}%</strong>
+    @if (alarm.recurrence) {
+      <div class="alarm-detail__stats">
+        <h2 class="alarm-detail__stats-title">Estadísticas de esta alarma recurrente</h2>
+        <p class="alarm-detail__stats-line">
+          Salidas a tiempo: <strong>{{ onTimeCount }}/{{ totalCount }}</strong> · Puntualidad:
+          <strong>{{ punctualityPercent }}%</strong>
+        </p>
+        <p class="alarm-detail__stats-note">
+          Próxima recurrencia calculada con tráfico y clima actuales.
+        </p>
+      </div>
+    }
+  } @else {
+    <h1 class="alarm-detail__title">No encontramos esta alarma</h1>
+    <p class="alarm-detail__missing">
+      Puede que se haya eliminado o que el enlace esté incompleto.
     </p>
-    <p class="alarm-detail__stats-note">Próxima recurrencia calculada con tráfico y clima actuales.</p>
-  </div>
+    <a mat-stroked-button class="alarm-detail__edit" routerLink="/alarmas">Ir a mis alarmas</a>
+  }
 </div>

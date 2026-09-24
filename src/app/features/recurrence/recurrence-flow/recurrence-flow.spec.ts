@@ -45,6 +45,13 @@ describe('RecurrenceFlow', () => {
     expect(activeStep()).toContain('Confirmar');
   });
 
+  it('si la alarma no existe, vuelve a Mis alarmas', async () => {
+    await harness.navigateByUrl('/alarmas/999/recurrencia');
+    await harness.fixture.whenStable();
+
+    expect(url()).toBe('/alarmas');
+  });
+
   it('Volver en el primer paso regresa al detalle de la alarma', async () => {
     await harness.navigateByUrl('/alarmas/1/recurrencia');
 

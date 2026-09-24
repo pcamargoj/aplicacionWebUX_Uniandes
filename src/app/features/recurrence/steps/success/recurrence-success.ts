@@ -21,7 +21,8 @@ export class RecurrenceSuccess {
   private readonly snackBar = inject(MatSnackBar);
   protected readonly store = inject(RecurrenceDraftStore);
 
-  protected readonly alarm = inject(AlarmsService).getById(this.store.draft().alarmId);
+  // Solo se llega a través del flujo, que ya validó que la alarma existe
+  protected readonly alarm = inject(AlarmsService).getById(this.store.draft().alarmId)!;
   protected readonly occurrences = computed(() => this.store.nextOccurrences());
 
   protected viewAllOccurrences(): void {

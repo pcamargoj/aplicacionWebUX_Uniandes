@@ -21,8 +21,9 @@ export class RecurrenceConfirm {
   private readonly route = inject(ActivatedRoute);
   private readonly store = inject(RecurrenceDraftStore);
 
-  // Todo sale del borrador y de la alarma (el mockup mezcla datos de dos alarmas)
-  protected readonly alarm = inject(AlarmsService).getById(this.store.draft().alarmId);
+  // Todo sale del borrador y de la alarma (el mockup mezcla datos de dos alarmas).
+  // Solo se llega a través del flujo, que ya validó que la alarma existe
+  protected readonly alarm = inject(AlarmsService).getById(this.store.draft().alarmId)!;
 
   protected readonly repeats = computed(() => capitalize(this.store.summaryLabel()));
   protected readonly meetingTime = formatTime(this.alarm.meetingAt);

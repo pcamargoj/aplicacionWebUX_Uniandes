@@ -3,9 +3,11 @@ import {
   endSummary,
   formatMonthYear,
   formatOccurrence,
+  formatFullDate,
   formatLongDate,
   formatPickerDate,
   formatTime,
+  formatWeekdayShort,
   frequencySummary,
   nextOccurrences,
 } from './recurrence.utils';
@@ -153,5 +155,19 @@ describe('formatTime', () => {
 describe('formatLongDate', () => {
   it('formatea la fecha larga', () => {
     expect(formatLongDate(new Date(2026, 11, 16))).toBe('16 de diciembre de 2026');
+  });
+});
+
+describe('formatFullDate', () => {
+  it('antepone el día de la semana a la fecha larga', () => {
+    expect(formatFullDate(new Date(2026, 7, 26))).toBe('Miércoles, 26 de agosto de 2026');
+    expect(formatFullDate(new Date(2026, 7, 30))).toBe('Domingo, 30 de agosto de 2026');
+  });
+});
+
+describe('formatWeekdayShort', () => {
+  it('da el día abreviado sin punto (lista de alarmas)', () => {
+    expect(formatWeekdayShort(new Date(2026, 7, 29))).toBe('Sáb');
+    expect(formatWeekdayShort(new Date(2026, 7, 30))).toBe('Dom');
   });
 });

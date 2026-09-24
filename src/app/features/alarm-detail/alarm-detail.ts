@@ -1,8 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+
+import { AlarmsService } from '../../core/alarms.service';
+import {
+  formatFullDate,
+  formatLongDate,
+  formatOccurrence,
+  formatTime,
+  frequencySummary,
+  nextOccurrences,
+} from '../recurrence/recurrence.utils';
 
 interface DetailField {
   label: string;
@@ -16,40 +26,58 @@ interface OccurrenceItem {
 
 @Component({
   selector: 'app-alarm-detail',
-  imports: [MatIconModule, MatButtonModule],
+  imports: [MatIconModule, MatButtonModule, RouterLink],
   templateUrl: './alarm-detail.html',
   styleUrl: './alarm-detail.css',
 })
 export class AlarmDetail {
-  protected readonly alarmTitle = 'Reunión semanal de ventas';
-  protected readonly isActive = true;
-  protected readonly recurrenceLabel = 'Esta alarma se repite todos los miércoles';
+  private readonly location = inject(Location);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly alarms = inject(AlarmsService);
 
-  protected readonly details: DetailField[] = [
-    { label: 'Fecha', value: 'Miércoles, 26 de agosto de 2026' },
-    { label: 'Hora de la reunión', value: '9:00 AM' },
-    { label: 'Lugar', value: 'Oficina principal' },
-    { label: 'Transporte', value: 'Carro' },
-    { label: 'Salida recomendada', value: '8:20 AM · Calculado con tráfico y clima actuales' },
-    { label: 'Notas', value: 'Reunión semanal del equipo de ventas.' },
-  ];
+  readonly id = input.required<string>();
 
-  protected readonly occurrences: OccurrenceItem[] = [
-    { dateLabel: 'Mié. 26 ago. 2026', timeLabel: '9:00 AM' },
-    { dateLabel: 'Mié. 2 sep. 2026', timeLabel: '9:00 AM' },
-    { dateLabel: 'Mié. 9 sep. 2026', timeLabel: '9:00 AM' },
-    { dateLabel: 'Mié. 16 sep. 2026', timeLabel: '9:00 AM' },
-  ];
+  protected readonly alarm = computed(() => this.alarms.getById(this.id()));
+
+  protected readonly details = computed<DetailField[]>(() => {
+    const alarm = this.alarm();
+    if (!alarm) return [];
+    return [
+      { label: 'Fecha', value: formatFullDate(alarm.meetingAt) },
+      { label: 'Hora de la reunión', value: formatTime(alarm.meetingAt) },
+      { label: 'Lugar', value: alarm.location },
+      { label: 'Transporte', value: alarm.transport },
+      {
+        label: 'Salida recomendada',
+        value: `${formatTime(alarm.departureAt)} · Calculado con tráfico y clima actuales`,
+      },
+      { label: 'Notas', value: alarm.notes },
+    ];
+  });
+
+  // Solo si la alarma tiene recurrencia (se agrega con el flujo de recurrencia)
+  protected readonly recurrenceLabel = computed(() => {
+    const recurrence = this.alarm()?.recurrence;
+    if (!recurrence) return null;
+    const { frequency, end } = recurrence;
+    const until = end.type === 'onDate' ? ` hasta el ${formatLongDate(end.date)}` : '';
+    return `Esta alarma se repite ${frequencySummary(frequency)}${until}`;
+  });
+
+  protected readonly occurrences = computed<OccurrenceItem[]>(() => {
+    const alarm = this.alarm();
+    if (!alarm?.recurrence) return [];
+    const { frequency, end } = alarm.recurrence;
+    return nextOccurrences(alarm.meetingAt, frequency, end, 4).map((date) => ({
+      dateLabel: formatOccurrence(date, true),
+      timeLabel: formatTime(date),
+    }));
+  });
 
   protected readonly onTimeCount = 12;
   protected readonly totalCount = 12;
   protected readonly punctualityPercent = 100;
-
-  constructor(
-    private readonly location: Location,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-  ) {}
 
   protected goBack(): void {
     this.location.back();

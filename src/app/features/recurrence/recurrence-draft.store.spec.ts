@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { AlarmsService } from '../../core/alarms.service';
 import { RecurrenceDraftStore } from './recurrence-draft.store';
 
 // Alarma de referencia del diseño: miércoles 26 de agosto de 2026, 9:00 AM
@@ -86,5 +87,18 @@ describe('RecurrenceDraftStore', () => {
     store.confirm();
 
     expect(store.confirmed()).toBeTrue();
+  });
+
+  it('al confirmar guarda la recurrencia en la alarma', () => {
+    store.init('1', ALARM_START);
+    store.toggleWeekday(0);
+    store.setEnd({ type: 'onDate', date: new Date(2026, 11, 16) });
+
+    store.confirm();
+
+    expect(TestBed.inject(AlarmsService).getById('1')?.recurrence).toEqual({
+      frequency: { type: 'weekly', interval: 1, weekdays: [2, 0] },
+      end: { type: 'onDate', date: new Date(2026, 11, 16) },
+    });
   });
 });

@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
-import { routes } from './app.routes';
+import { appConfig } from './app.config';
 
 describe('routes', () => {
   let harness: RouterTestingHarness;
   const root = () => harness.fixture.nativeElement as HTMLElement;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
+    // Configuración real: rutas + input binding (el detalle lee :id como input)
+    TestBed.configureTestingModule({ providers: appConfig.providers });
     harness = await RouterTestingHarness.create();
   });
 

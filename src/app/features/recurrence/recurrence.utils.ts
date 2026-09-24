@@ -137,3 +137,15 @@ export function formatTime(date: Date): string {
 export function formatLongDate(date: Date): string {
   return `${date.getDate()} de ${MONTHS[date.getMonth()]} de ${date.getFullYear()}`;
 }
+
+const WEEKDAY_NAMES = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+// 'Miércoles, 26 de agosto de 2026' (detalle de la alarma, WD13)
+export function formatFullDate(date: Date): string {
+  return `${WEEKDAY_NAMES[weekdayOf(date)]}, ${formatLongDate(date)}`;
+}
+
+// 'Sáb' (lista de alarmas: 'Sáb · 9:00 AM')
+export function formatWeekdayShort(date: Date): string {
+  return WEEKDAY_SHORT[weekdayOf(date)].slice(0, -1);
+}

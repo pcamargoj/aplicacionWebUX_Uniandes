@@ -78,6 +78,10 @@
   align-items: start;
 }
 
+.alarm-detail__row--single {
+  grid-template-columns: minmax(0, 1.1fr);
+}
+
 @media (max-width: 900px) {
   .alarm-detail__row {
     grid-template-columns: 1fr;
@@ -200,5 +204,11 @@
 .alarm-detail__stats-note {
   margin: 0;
   font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.alarm-detail__missing {
+  margin: 0;
+  font: var(--mat-sys-body-medium);
   color: var(--mat-sys-on-surface-variant);
 }
