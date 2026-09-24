@@ -1,5 +1,13 @@
-import { Component, OnInit, inject, input } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  Component,
+  ElementRef,
+  Injector,
+  OnInit,
+  afterNextRender,
+  inject,
+  input,
+} from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +34,8 @@ export class RecurrenceFlow implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly store = inject(RecurrenceDraftStore);
   private readonly alarms = inject(AlarmsService);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly injector = inject(Injector);
 
   readonly id = input.required<string>();
 
@@ -39,6 +49,17 @@ export class RecurrenceFlow implements OnInit {
     ),
     { initialValue: this.currentStep() },
   );
+
+  constructor() {
+    // Al cambiar de paso, el foco pasa al título del paso nuevo para que el lector de
+    // pantalla lo anuncie (si no, queda en el botón que ya desapareció)
+    this.router.events
+      .pipe(
+        filter((e) => e instanceof NavigationEnd),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => afterNextRender(() => this.focusStepTitle(), { injector: this.injector }));
+  }
 
   ngOnInit(): void {
     const alarm = this.alarms.getById(this.id());
@@ -55,6 +76,14 @@ export class RecurrenceFlow implements OnInit {
       this.router.navigate(['/alarmas', this.id()]);
     } else {
       this.router.navigate([STEPS[step - 2].path], { relativeTo: this.route });
+    }
+  }
+
+  private focusStepTitle(): void {
+    const title = this.host.nativeElement.querySelector<HTMLElement>('.flow__main h1');
+    if (title) {
+      title.tabIndex = -1;
+      title.focus();
     }
   }
 

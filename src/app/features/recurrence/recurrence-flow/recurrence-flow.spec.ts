@@ -71,6 +71,19 @@ describe('RecurrenceFlow', () => {
     expect(url()).toBe('/alarmas/1/recurrencia/frecuencia');
   });
 
+  it('al cambiar de paso mueve el foco al título del paso nuevo', async () => {
+    await harness.navigateByUrl('/alarmas/1/recurrencia');
+
+    Array.from(root().querySelectorAll('button'))
+      .find((b) => b.textContent?.trim() === 'Continuar')!
+      .click();
+    await harness.fixture.whenStable();
+    harness.fixture.detectChanges();
+
+    expect(document.activeElement?.tagName).toBe('H1');
+    expect(document.activeElement?.textContent).toContain('¿Hasta cuándo se repite?');
+  });
+
   it('la pantalla de éxito no tiene stepper ni Volver', async () => {
     await harness.navigateByUrl('/alarmas/1/recurrencia');
     await harness.navigateByUrl('/alarmas/1/recurrencia/listo');

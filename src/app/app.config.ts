@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEsCo from '@angular/common/locales/es-CO';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { TitleStrategy, provideRouter, withComponentInputBinding } from '@angular/router';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -15,6 +15,7 @@ import {
 } from '@angular/material/core';
 
 import { routes } from './app.routes';
+import { AppTitleStrategy } from './core/app-title-strategy';
 import { MondayFirstDateAdapter } from './core/monday-first-date-adapter';
 
 registerLocaleData(localeEsCo);
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
+    { provide: TitleStrategy, useClass: AppTitleStrategy },
     { provide: LOCALE_ID, useValue: 'es-CO' },
     { provide: MAT_DATE_LOCALE, useValue: 'es-CO' },
     { provide: DateAdapter, useClass: MondayFirstDateAdapter },

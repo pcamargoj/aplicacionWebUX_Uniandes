@@ -8,7 +8,7 @@
       <mat-icon>add</mat-icon>
     </button>
 
-    <nav class="shell__nav">
+    <nav class="shell__nav" aria-label="Navegación principal">
       @for (item of navItems; track item.route) {
         @if (item.implemented) {
           <a

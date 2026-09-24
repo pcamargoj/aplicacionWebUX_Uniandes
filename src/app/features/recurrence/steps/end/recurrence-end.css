@@ -21,7 +21,7 @@
 .end__calendar ::ng-deep .mat-calendar-table-header th {
   padding: 4px 0 6px;
   font: var(--mat-sys-label-small);
-  color: var(--mat-sys-outline);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .end__calendar ::ng-deep .mat-calendar-table-header-divider {

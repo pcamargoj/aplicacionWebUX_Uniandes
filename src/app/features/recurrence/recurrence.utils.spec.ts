@@ -1,6 +1,7 @@
 import { FrequencyConfig } from './recurrence.model';
 import {
   endSummary,
+  formatDuration,
   formatMonthYear,
   formatOccurrence,
   formatFullDate,
@@ -169,5 +170,13 @@ describe('formatWeekdayShort', () => {
   it('da el día abreviado sin punto (lista de alarmas)', () => {
     expect(formatWeekdayShort(new Date(2026, 7, 29))).toBe('Sáb');
     expect(formatWeekdayShort(new Date(2026, 7, 30))).toBe('Dom');
+  });
+});
+
+describe('formatDuration', () => {
+  it('formatea minutos como horas y minutos', () => {
+    expect(formatDuration(130)).toBe('2h 10min');
+    expect(formatDuration(45)).toBe('45min');
+    expect(formatDuration(180)).toBe('3h');
   });
 });

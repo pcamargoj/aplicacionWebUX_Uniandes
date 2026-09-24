@@ -70,3 +70,15 @@
   font-weight: 400;
   color: var(--mat-sys-on-surface-variant);
 }
+
+/* Compacto: 96px entre centros y líneas de 64px */
+@media (max-width: 600px) {
+  .stepper__step {
+    width: 96px;
+  }
+
+  .stepper__step + .stepper__step::before {
+    left: -32px;
+    width: 64px;
+  }
+}

@@ -11,8 +11,7 @@ describe('Shell', () => {
     await TestBed.configureTestingModule({
       imports: [Shell],
       providers: [provideRouter([])],
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Shell);
     component = fixture.componentInstance;
@@ -21,5 +20,11 @@ describe('Shell', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('la navegación principal tiene nombre propio', () => {
+    const nav = (fixture.nativeElement as HTMLElement).querySelector('nav');
+
+    expect(nav?.getAttribute('aria-label')).toBe('Navegación principal');
   });
 });

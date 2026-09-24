@@ -19,7 +19,9 @@ export interface Alarm {
   recurrence: AlarmRecurrence | null;
 }
 
-// "Hoy" del prototipo: el día de la alarma de WD13. La app no tiene backend ni reloj real.
+// "Ahora" del prototipo: el día de la alarma de WD13, a las 6:10 AM (la próxima salida,
+// 8:20 AM, queda a 2h 10min como en WD08). La app no tiene backend ni reloj real.
+export const NOW = new Date(2026, 7, 26, 6, 10);
 export const TODAY = new Date(2026, 7, 26);
 
 const at = (day: number, hours: number, minutes = 0) => new Date(2026, 7, day, hours, minutes);

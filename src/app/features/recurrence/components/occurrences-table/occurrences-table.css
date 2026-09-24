@@ -18,7 +18,7 @@
 
 .occurrences thead th {
   font: var(--mat-sys-label-medium);
-  color: var(--mat-sys-outline);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .occurrences thead th:nth-child(1) {
@@ -50,7 +50,7 @@
 
 .occurrences__departure {
   font: var(--mat-sys-body-medium);
-  color: var(--mat-sys-outline);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .occurrences__departure--known {

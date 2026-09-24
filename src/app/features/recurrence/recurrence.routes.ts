@@ -16,23 +16,31 @@ export const RECURRENCE_ROUTES: Routes = [
     providers: [RecurrenceDraftStore],
     children: [
       { path: '', redirectTo: 'frecuencia', pathMatch: 'full' },
-      { path: 'frecuencia', component: RecurrenceFrequency, data: { step: 1 } },
+      {
+        path: 'frecuencia',
+        component: RecurrenceFrequency,
+        data: { step: 1 },
+        title: 'Frecuencia · Agregar recurrencia',
+      },
       {
         path: 'fin',
         component: RecurrenceEnd,
         data: { step: 2 },
+        title: 'Hasta cuándo · Agregar recurrencia',
         canActivate: [hasFrequencyGuard],
       },
       {
         path: 'confirmar',
         component: RecurrenceConfirm,
         data: { step: 3 },
+        title: 'Confirmar · Agregar recurrencia',
         canActivate: [hasFrequencyGuard],
       },
       {
         path: 'listo',
         component: RecurrenceSuccess,
         data: { step: 4 },
+        title: 'Recurrencia agregada',
         canActivate: [hasFrequencyGuard],
       },
     ],

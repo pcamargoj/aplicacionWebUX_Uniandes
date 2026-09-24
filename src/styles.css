@@ -1,10 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Únicos colores propios; todo lo demás sale de las variables M3 (--mat-sys-*) */
+/* Únicos colores propios; todo lo demás sale de las variables M3 (--mat-sys-*).
+   El CTA de Figma (#e8543f) da 3.64:1 con texto blanco; #d04531 da 4.59:1 (WCAG AA). */
 :root {
-  --app-cta: #e8543f;
+  --app-cta: #d04531;
   --app-success: #1e7e34;
 }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Destinos de foco por código (p. ej. el título de cada paso): no son interactivos,
+   así que no llevan el contorno de foco */
+[tabindex='-1']:focus {
+  outline: none;
+}

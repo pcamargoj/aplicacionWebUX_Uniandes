@@ -66,3 +66,18 @@
 .flow__main {
   flex: 1;
 }
+
+/* Pantallas angostas: Volver arriba y el stepper compacto debajo, centrado */
+@media (max-width: 600px) {
+  .flow__header {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 16px;
+    padding: 24px 16px 0;
+  }
+
+  .flow__stepper {
+    grid-column: 1;
+    justify-self: center;
+    top: 0;
+  }
+}

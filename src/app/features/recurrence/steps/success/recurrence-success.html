@@ -28,10 +28,10 @@
     <button mat-flat-button class="success__cta" (click)="goToAlarms()">Ir a mis alarmas</button>
   </div>
 
-  <aside class="success__share">
+  <section class="success__share" aria-labelledby="share-title">
     <mat-icon class="success__share-icon" aria-hidden="true">share</mat-icon>
     <div>
-      <h2 class="success__share-title">Comparte esta alarma con tu equipo</h2>
+      <h2 class="success__share-title" id="share-title">Comparte esta alarma con tu equipo</h2>
       <p class="success__share-text">
         Otras personas pueden recibir un recordatorio con la misma hora de salida recomendada.
       </p>
@@ -40,5 +40,5 @@
         <mat-icon aria-hidden="true">chevron_right</mat-icon>
       </button>
     </div>
-  </aside>
+  </section>
 </section>

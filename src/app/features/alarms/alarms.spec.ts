@@ -77,4 +77,56 @@ describe('Alarms', () => {
 
     expect(TestBed.inject(AlarmsService).getById('2')?.enabled).toBeFalse();
   });
+
+  it('cada interruptor dice de qué alarma es', () => {
+    const toggle = items()[1].querySelector('button[role="switch"]')!;
+
+    expect(toggle.getAttribute('aria-label')).toBe('Activar alarma: Reunión interna');
+  });
+
+  it('las pestañas indican cuál filtro está activo', async () => {
+    const pressed = () =>
+      Array.from(el().querySelectorAll('.alarms-page__tab')).map((tab) =>
+        tab.getAttribute('aria-pressed'),
+      );
+
+    expect(pressed()).toEqual(['true', 'false', 'false', 'false']);
+
+    await clickTab('Hoy');
+
+    expect(pressed()).toEqual(['false', 'true', 'false', 'false']);
+  });
+
+  it('la navegación de filtros tiene nombre propio', () => {
+    expect(el().querySelector('.alarms-page__tabs')?.getAttribute('aria-label')).toBe(
+      'Filtrar alarmas',
+    );
+  });
+
+  describe('resumen', () => {
+    const summary = () => text(el().querySelector('.alarms-page__summary span'));
+
+    it('cuenta las alarmas activas y el tiempo hasta la próxima salida', () => {
+      // "Ahora" en el prototipo: 6:10 AM; la próxima salida es a las 8:20 AM
+      expect(summary()).toBe('6 alarmas activas · Próxima salida en 2h 10min');
+    });
+
+    it('se actualiza al desactivar alarmas', () => {
+      TestBed.inject(AlarmsService).setEnabled('1', false);
+      fixture.detectChanges();
+
+      expect(summary()).toBe('5 alarmas activas · Próxima salida en 4h 20min');
+    });
+
+    it('usa singular y avisa si no hay salidas próximas', () => {
+      const service = TestBed.inject(AlarmsService);
+      ['1', '2', '3', '4', '5'].forEach((id) => service.setEnabled(id, false));
+      fixture.detectChanges();
+      expect(summary()).toBe('1 alarma activa · Próxima salida en 4 días');
+
+      service.setEnabled('6', false);
+      fixture.detectChanges();
+      expect(summary()).toBe('No tienes alarmas activas');
+    });
+  });
 });

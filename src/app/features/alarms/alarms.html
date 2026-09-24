@@ -7,12 +7,13 @@
     </button>
   </header>
 
-  <nav class="alarms-page__tabs">
+  <nav class="alarms-page__tabs" aria-label="Filtrar alarmas">
     @for (tab of tabs; track tab.key) {
       <button
         type="button"
         class="alarms-page__tab"
         [class.alarms-page__tab--active]="selectedTab() === tab.key"
+        [attr.aria-pressed]="selectedTab() === tab.key"
         (click)="selectTab(tab.key)"
       >
         {{ tab.label }}
@@ -32,13 +33,15 @@
               <span class="alarms-page__when">{{ alarm.whenLabel }}</span>
               <span class="alarms-page__name">{{ alarm.title }}</span>
               <span class="alarms-page__meta">
-                {{ alarm.location }} · <span class="alarms-page__leave">{{ alarm.leaveAtLabel }}</span>
+                {{ alarm.location }} ·
+                <span class="alarms-page__leave">{{ alarm.leaveAtLabel }}</span>
               </span>
             </div>
           </a>
           <mat-slide-toggle
             class="alarms-page__toggle"
             hideIcon
+            [aria-label]="'Activar alarma: ' + alarm.title"
             [checked]="alarm.enabled"
             (change)="toggleAlarm(alarm)"
           />
@@ -49,6 +52,6 @@
 
   <div class="alarms-page__summary">
     <mat-icon>schedule</mat-icon>
-    <span>{{ activeAlarmsCount }} alarmas activas · Próxima salida en {{ nextDepartureLabel }}</span>
+    <span>{{ summary() }}</span>
   </div>
 </div>

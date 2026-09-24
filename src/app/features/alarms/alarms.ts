@@ -4,8 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
-import { Alarm, AlarmsService, TODAY } from '../../core/alarms.service';
-import { formatTime, formatWeekdayShort } from '../recurrence/recurrence.utils';
+import { Alarm, AlarmsService, NOW, TODAY } from '../../core/alarms.service';
+import { formatDuration, formatTime, formatWeekdayShort } from '../recurrence/recurrence.utils';
 
 interface AlarmItem {
   id: string;
@@ -52,8 +52,20 @@ export class Alarms {
     return alarms;
   });
 
-  protected readonly activeAlarmsCount = 5;
-  protected readonly nextDepartureLabel = '2h 10min';
+  // "6 alarmas activas · Próxima salida en 2h 10min", calculado desde "ahora" (NOW)
+  protected readonly summary = computed(() => {
+    const active = this.alarmsService.alarms().filter((alarm) => alarm.enabled);
+    if (!active.length) return 'No tienes alarmas activas';
+
+    const count = active.length === 1 ? '1 alarma activa' : `${active.length} alarmas activas`;
+    const upcoming = active
+      .map((alarm) => alarm.departureAt.getTime())
+      .filter((time) => time > NOW.getTime());
+    if (!upcoming.length) return count;
+
+    const minutes = Math.round((Math.min(...upcoming) - NOW.getTime()) / 60_000);
+    return `${count} · Próxima salida en ${timeUntil(minutes)}`;
+  });
 
   protected selectTab(tab: AlarmsTabKey): void {
     this.selectedTab.set(tab);
@@ -66,6 +78,13 @@ export class Alarms {
   protected onCreateAlarm(): void {
     // pendiente: flujo de creación de alarma
   }
+}
+
+// Menos de un día: '2h 10min'; si no, días completos: '4 días'
+function timeUntil(minutes: number): string {
+  const days = Math.floor(minutes / 1440);
+  if (!days) return formatDuration(minutes);
+  return days === 1 ? '1 día' : `${days} días`;
 }
 
 // Días de diferencia con "hoy" (TODAY), sin contar la hora

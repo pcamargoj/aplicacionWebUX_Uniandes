@@ -70,7 +70,7 @@
 
 .confirm__fact dt {
   font: var(--mat-sys-label-medium);
-  color: var(--mat-sys-outline);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 .confirm__fact dd {
