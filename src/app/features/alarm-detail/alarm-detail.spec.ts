@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { AlarmDetail } from './alarm-detail';
 
@@ -8,7 +9,8 @@ describe('AlarmDetail', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AlarmDetail]
+      imports: [AlarmDetail],
+      providers: [provideRouter([])],
     })
     .compileComponents();
 

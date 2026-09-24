@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.option-card {
+  display: block;
+  box-sizing: border-box;
+  min-height: 68px;
+  padding-left: 14px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-medium);
+  background: var(--mat-sys-surface-container-lowest);
+}
+
+/* Seleccionada (clase que pone mat-radio-button). Borde de 2px sin mover el contenido */
+.option-card.mat-mdc-radio-checked {
+  border-color: var(--mat-sys-primary);
+  box-shadow: inset 0 0 0 1px var(--mat-sys-primary);
+  background: var(--mat-sys-primary-container);
+}
+
+/* El label interno del radio ocupa toda la tarjeta: cualquier clic la selecciona */
+.option-card ::ng-deep .mdc-form-field {
+  display: flex;
+  width: 100%;
+  min-height: 66px;
+}
+
+.option-card ::ng-deep .mdc-label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  padding: 12px 24px 12px 10px;
+  cursor: pointer;
+}
+
+.option-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.option-card__title {
+  font: var(--mat-sys-title-medium);
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+.option-card__subtitle {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+/* Estado deshabilitado de M3: on-surface al 38% */
+.option-card--disabled {
+  border-color: color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
+}
+
+.option-card--disabled ::ng-deep .mdc-label {
+  cursor: default;
+}
+
+.option-card--disabled .option-card__title,
+.option-card--disabled .option-card__subtitle,
+.option-card__soon {
+  color: color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent);
+}
+
+.option-card__soon {
+  margin-left: auto;
+  font: var(--mat-sys-label-small);
+  white-space: nowrap;
+}

@@ -1,0 +1,18 @@
+<div class="flow">
+  @if (step() <= stepLabels.length) {
+    <header class="flow__header">
+      <button type="button" class="flow__back" (click)="goBack()">
+        <span class="flow__back-circle">
+          <mat-icon aria-hidden="true">chevron_left</mat-icon>
+        </span>
+        Volver
+      </button>
+
+      <app-recurrence-stepper class="flow__stepper" [steps]="stepLabels" [current]="step()" />
+    </header>
+  }
+
+  <main class="flow__main">
+    <router-outlet />
+  </main>
+</div>

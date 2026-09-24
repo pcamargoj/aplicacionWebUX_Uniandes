@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -44,7 +45,11 @@ export class AlarmDetail {
   protected readonly totalCount = 12;
   protected readonly punctualityPercent = 100;
 
-  constructor(private readonly location: Location) {}
+  constructor(
+    private readonly location: Location,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+  ) {}
 
   protected goBack(): void {
     this.location.back();
@@ -55,7 +60,7 @@ export class AlarmDetail {
   }
 
   protected onAddRecurrence(): void {
-    // pendiente: flujo de recurrencia
+    this.router.navigate(['recurrencia'], { relativeTo: this.route });
   }
 
   protected onViewAllOccurrences(): void {

@@ -1,0 +1,16 @@
+<mat-radio-button
+  class="option-card"
+  [class.option-card--disabled]="disabled()"
+  [value]="value()"
+  [disabled]="disabled()"
+>
+  <span class="option-card__text">
+    <span class="option-card__title">{{ title() }}</span>
+    @if (subtitle()) {
+      <span class="option-card__subtitle">{{ subtitle() }}</span>
+    }
+  </span>
+  @if (disabled()) {
+    <span class="option-card__soon">Próximamente</span>
+  }
+</mat-radio-button>
