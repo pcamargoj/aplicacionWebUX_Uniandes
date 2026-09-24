@@ -1,0 +1,75 @@
+<section class="step">
+  <h1 class="step__title">¿Hasta cuándo se repite?</h1>
+
+  <div class="step__columns">
+    <div>
+      <mat-radio-group
+        class="step__options"
+        aria-label="Hasta cuándo se repite"
+        [value]="choice()"
+        (change)="onChoiceChange($event.value)"
+      >
+        <app-option-card
+          value="never"
+          title="Nunca termina"
+          subtitle="La alarma se repite indefinidamente"
+        />
+        <app-option-card
+          value="onDate"
+          title="Terminar en una fecha específica"
+          subtitle="Elige la fecha de fin en el calendario"
+        />
+        <app-option-card
+          value="count"
+          title="Terminar después de N repeticiones"
+          subtitle="Se detiene tras un número de veces"
+          disabled
+        />
+      </mat-radio-group>
+
+      @if (calendarOpen()) {
+        <div class="end__calendar" role="group" aria-label="Fecha de fin">
+          <mat-calendar
+            [headerComponent]="calendarHeader"
+            [selected]="pendingDate()"
+            [startAt]="pendingDate() ?? store.alarmStart()"
+            [minDate]="store.alarmStart()"
+            (selectedChange)="pendingDate.set($event)"
+          />
+          <div class="end__calendar-actions">
+            <button mat-button class="end__cancel" (click)="cancel()">Cancelar</button>
+            <button mat-button [disabled]="!pendingDate()" (click)="accept()">Aceptar</button>
+          </div>
+        </div>
+      } @else if (choice() === 'onDate' && endDate(); as date) {
+        <p class="end__chosen">
+          Termina el {{ formatPickerDate(date) }}
+          <button mat-button class="end__change" (click)="openCalendar()">Cambiar fecha</button>
+        </p>
+      }
+    </div>
+
+    <div class="step__side end__side">
+      <div class="step__panel end__panel">
+        <h2 class="step__panel-title end__panel-title">Próximas ocurrencias</h2>
+        <ul class="end__occurrences">
+          @for (occurrence of occurrences(); track occurrence) {
+            <li class="end__occurrence">{{ occurrence }}</li>
+          }
+        </ul>
+        <p class="end__note">
+          {{ endDate() ? store.endLabel() : 'La alarma se repite indefinidamente' }}
+        </p>
+      </div>
+
+      <button
+        mat-flat-button
+        class="step__cta end__next"
+        [disabled]="!canContinue()"
+        (click)="continue()"
+      >
+        Siguiente
+      </button>
+    </div>
+  </div>
+</section>

@@ -1,7 +1,9 @@
 import { FrequencyConfig } from './recurrence.model';
 import {
   endSummary,
+  formatMonthYear,
   formatOccurrence,
+  formatPickerDate,
   frequencySummary,
   nextOccurrences,
 } from './recurrence.utils';
@@ -116,5 +118,19 @@ describe('formatOccurrence', () => {
 
   it('omite el año cuando se pide', () => {
     expect(formatOccurrence(new Date(2026, 8, 2), false)).toBe('Mié. 2 sep.');
+  });
+});
+
+describe('formatPickerDate', () => {
+  it('formatea la fecha del encabezado del calendario', () => {
+    // En el mockup dice "mar, 16 dic 2026", pero el 16 de diciembre de 2026 es miércoles
+    expect(formatPickerDate(new Date(2026, 11, 16))).toBe('mié, 16 dic 2026');
+    expect(formatPickerDate(new Date(2026, 8, 1))).toBe('mar, 1 sep 2026');
+  });
+});
+
+describe('formatMonthYear', () => {
+  it('formatea el mes visible del calendario con mayúscula inicial', () => {
+    expect(formatMonthYear(new Date(2026, 11, 16))).toBe('Diciembre 2026');
   });
 });

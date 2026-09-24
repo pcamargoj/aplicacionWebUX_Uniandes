@@ -1,0 +1,132 @@
+/* Calendario (WD15 2362:126): tarjeta de 340px, 40px debajo de las opciones */
+.end__calendar {
+  box-sizing: border-box;
+  width: 340px;
+  max-width: 100%;
+  margin-top: 40px;
+  overflow: hidden;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-large);
+  background: var(--mat-sys-surface-container-lowest);
+  box-shadow: var(--mat-sys-level2);
+}
+
+/* Grilla compacta como en Figma: columnas de 44px, filas de 36px y círculo de 32px.
+   mat-calendar calcula el alto de la celda con un padding inline proporcional al ancho, por
+   eso se sobrescribe con !important. */
+.end__calendar ::ng-deep .mat-calendar-content {
+  padding: 0 15px;
+}
+
+.end__calendar ::ng-deep .mat-calendar-table-header th {
+  padding: 4px 0 6px;
+  font: var(--mat-sys-label-small);
+  color: var(--mat-sys-outline);
+}
+
+.end__calendar ::ng-deep .mat-calendar-table-header-divider {
+  display: none;
+}
+
+.end__calendar ::ng-deep .mat-calendar-body-cell-container,
+.end__calendar ::ng-deep .mat-calendar-body-label {
+  height: 36px;
+  padding: 0 !important;
+}
+
+.end__calendar ::ng-deep .mat-calendar-body-cell-content {
+  top: 2px;
+  left: calc(50% - 16px);
+  width: 32px;
+  height: 32px;
+  font: var(--mat-sys-body-medium);
+}
+
+.end__calendar ::ng-deep .mat-calendar-body-selected {
+  font-weight: 700;
+}
+
+/* Sin el rótulo del mes ("DIC.") que mat-calendar pone en la primera fila */
+.end__calendar ::ng-deep .mat-calendar-body tr[aria-hidden='true'] {
+  display: none;
+}
+
+.end__calendar ::ng-deep .mat-calendar-body-label {
+  color: transparent;
+}
+
+.end__calendar-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  margin: 4px 24px 0;
+  padding: 2px 0 4px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+.end__cancel {
+  --mat-button-text-label-text-color: var(--mat-sys-on-surface-variant);
+}
+
+.end__chosen {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+/* El panel mide 260px de alto y empieza a la altura de las opciones */
+.end__panel {
+  min-height: 260px;
+  margin-top: 8px;
+}
+
+.end__panel-title {
+  font-size: 15px;
+}
+
+.end__occurrences {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.end__occurrence {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface);
+}
+
+.end__occurrence::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: var(--mat-sys-corner-full);
+  background: var(--mat-sys-primary);
+}
+
+.end__note {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--mat-sys-outline-variant);
+  font: var(--mat-sys-label-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+/* Siguiente abajo a la derecha, alineado con el borde derecho del panel */
+.end__side {
+  align-self: stretch;
+  gap: 32px;
+}
+
+.end__next {
+  align-self: flex-end;
+  margin-top: auto;
+}

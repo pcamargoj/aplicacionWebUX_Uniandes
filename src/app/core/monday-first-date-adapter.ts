@@ -7,4 +7,11 @@ export class MondayFirstDateAdapter extends NativeDateAdapter {
   override getFirstDayOfWeek(): number {
     return 1;
   }
+
+  // Intl da 'l m m j v s d' (dos "m"); el diseño usa mayúsculas y X para el miércoles
+  override getDayOfWeekNames(style: 'long' | 'short' | 'narrow'): string[] {
+    return style === 'narrow'
+      ? ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+      : super.getDayOfWeekNames(style);
+  }
 }

@@ -113,3 +113,16 @@ export function formatOccurrence(date: Date, withYear: boolean): string {
   const label = `${WEEKDAY_SHORT[weekdayOf(date)]} ${date.getDate()} ${MONTHS_SHORT[date.getMonth()]}`;
   return withYear ? `${label} ${date.getFullYear()}` : label;
 }
+
+// 'mar, 16 dic 2026' (encabezado del calendario, WD15)
+export function formatPickerDate(date: Date): string {
+  const weekday = WEEKDAY_SHORT[weekdayOf(date)].slice(0, 3).toLowerCase();
+  const month = MONTHS_SHORT[date.getMonth()].slice(0, 3);
+  return `${weekday}, ${date.getDate()} ${month} ${date.getFullYear()}`;
+}
+
+// 'Diciembre 2026' (navegación de mes del calendario)
+export function formatMonthYear(date: Date): string {
+  const month = MONTHS[date.getMonth()];
+  return `${month[0].toUpperCase()}${month.slice(1)} ${date.getFullYear()}`;
+}

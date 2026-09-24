@@ -11,10 +11,11 @@ export class RecurrenceDraftStore {
     frequency: null,
     end: { type: 'never' },
   });
-  private readonly alarmStart = signal<Date | null>(null);
+  private readonly start = signal<Date | null>(null);
   private readonly isConfirmed = signal(false);
 
   readonly draft = this.state.asReadonly();
+  readonly alarmStart = this.start.asReadonly();
   readonly confirmed = this.isConfirmed.asReadonly();
 
   readonly summaryLabel = computed(() => {
@@ -26,12 +27,12 @@ export class RecurrenceDraftStore {
 
   readonly nextOccurrences = computed(() => {
     const { frequency, end } = this.state();
-    const start = this.alarmStart();
+    const start = this.start();
     return frequency && start ? nextOccurrences(start, frequency, end, 4) : [];
   });
 
   init(alarmId: string, alarmStart: Date): void {
-    this.alarmStart.set(alarmStart);
+    this.start.set(alarmStart);
     this.isConfirmed.set(false);
     this.state.set({
       alarmId,

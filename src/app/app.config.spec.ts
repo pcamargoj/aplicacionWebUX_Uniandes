@@ -26,4 +26,17 @@ describe('appConfig', () => {
   it('empieza la semana del calendario en lunes', () => {
     expect(TestBed.inject(DateAdapter).getFirstDayOfWeek()).toBe(1);
   });
+
+  it('usa las iniciales de los días del diseño (X para miércoles), empezando en domingo', () => {
+    // DateAdapter indexa desde domingo; el calendario las reordena según getFirstDayOfWeek
+    expect(TestBed.inject(DateAdapter).getDayOfWeekNames('narrow')).toEqual([
+      'D',
+      'L',
+      'M',
+      'X',
+      'J',
+      'V',
+      'S',
+    ]);
+  });
 });

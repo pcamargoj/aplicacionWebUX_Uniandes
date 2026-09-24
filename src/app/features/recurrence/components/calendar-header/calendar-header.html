@@ -1,0 +1,28 @@
+<div class="calendar-header__top">
+  <div>
+    <p class="calendar-header__overline">SELECCIONA UNA FECHA</p>
+    <p class="calendar-header__date" aria-live="polite">{{ dateLabel }}</p>
+  </div>
+  <mat-icon class="calendar-header__icon" aria-hidden="true">calendar_month</mat-icon>
+</div>
+
+<div class="calendar-header__nav">
+  <button
+    type="button"
+    class="calendar-header__arrow"
+    aria-label="Mes anterior"
+    [disabled]="isFirstMonth"
+    (click)="previousMonth()"
+  >
+    <mat-icon aria-hidden="true">chevron_left</mat-icon>
+  </button>
+  <span class="calendar-header__month">{{ monthLabel }}</span>
+  <button
+    type="button"
+    class="calendar-header__arrow calendar-header__arrow--next"
+    aria-label="Mes siguiente"
+    (click)="nextMonth()"
+  >
+    <mat-icon aria-hidden="true">chevron_right</mat-icon>
+  </button>
+</div>

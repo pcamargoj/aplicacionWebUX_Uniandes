@@ -31,6 +31,14 @@ describe('RecurrenceDraftStore', () => {
     expect(store.endLabel()).toBe('Nunca');
   });
 
+  it('expone la fecha de la alarma (mínimo del calendario de fin)', () => {
+    expect(store.alarmStart()).toBeNull();
+
+    store.init('1', ALARM_START);
+
+    expect(store.alarmStart()).toEqual(ALARM_START);
+  });
+
   it('calcula las próximas 4 ocurrencias desde la fecha de la alarma', () => {
     store.init('1', ALARM_START);
 

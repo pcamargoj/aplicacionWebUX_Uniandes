@@ -85,4 +85,21 @@ describe('OptionCard (selección)', () => {
     expect(fixture.componentInstance.value()).toBe('onDate');
     expect(onDate.querySelector('input')?.checked).toBeTrue();
   });
+
+  it('refleja un cambio de valor del grupo hecho desde código', () => {
+    const fixture = TestBed.createComponent(TwoEnabledHost);
+    fixture.detectChanges();
+    const inputs = () =>
+      Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('input')).map(
+        (i) => i.checked,
+      );
+
+    fixture.componentInstance.value.set('onDate');
+    fixture.detectChanges();
+    expect(inputs()).toEqual([false, true]);
+
+    fixture.componentInstance.value.set('never');
+    fixture.detectChanges();
+    expect(inputs()).toEqual([true, false]);
+  });
 });

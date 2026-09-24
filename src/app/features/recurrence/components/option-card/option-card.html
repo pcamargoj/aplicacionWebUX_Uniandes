@@ -2,6 +2,7 @@
   class="option-card"
   [class.option-card--disabled]="disabled()"
   [value]="value()"
+  [checked]="group.value === value()"
   [disabled]="disabled()"
 >
   <span class="option-card__text">
